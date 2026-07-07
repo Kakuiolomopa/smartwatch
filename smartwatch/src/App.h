@@ -9,6 +9,17 @@ class App{
         ScreenManager screenManager;
 
     public:
+
+        std::function<void()> onBack;
+
+        static void back_cb(lv_event_t *e){
+            App* app = (App*)lv_event_get_user_data(e);
+            lv_indev_t* indev = lv_event_get_indev(e);
+            if(lv_indev_get_gesture_dir(indev)==LV_DIR_BOTTOM && app->onBack){
+                app->onBack();
+            }
+        }
+
         App(int maxsize) : screenManager(maxsize){
         }
 

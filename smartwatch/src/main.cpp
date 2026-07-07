@@ -5,7 +5,7 @@
 
 LilyGo_Class amoled;
 
-MainMenuApp mainMenu(1,2);
+MainMenuApp mainMenu(3);
 
 void setup()
 {

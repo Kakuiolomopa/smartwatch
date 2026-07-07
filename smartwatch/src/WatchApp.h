@@ -15,16 +15,18 @@ class WatchApp: public App{
             initScreens = new Screen*[maxsize];
         }
 
-        void create(){
+
+        void create() override{
             for(int i=0;i<maxsize;i++){
                 initScreens[i] = new WatchFaceScreen();
                 initScreens[i]->create();
+                lv_obj_add_event_cb(initScreens[i]->lvScreen,back_cb,LV_EVENT_GESTURE,this);
             }
             screenManager.initializeScreens(initScreens);
             screenManager.begin();
         }
 
-        void update(){
+        void update() override{
             Screen* active = screenManager.getCurrentScreen();
             active->update();
         }
