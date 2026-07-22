@@ -9,6 +9,9 @@ MainMenuApp mainMenu(3);
 
 void setup()
 {
+    disableCore0WDT();
+    disableLoopWDT();
+
     Serial.begin(115200);
     delay(3000);
 

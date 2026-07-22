@@ -42,17 +42,21 @@ class ScreenManager{
         }
 
         void swipeLeft() {
-            current = (current + 1) % maxScreens;  // go to next, wrap around
+            current = (current - 1 + maxScreens) % maxScreens;  // go to next, wrap around
             screens[current]->swipeRight();
         }
 
         void swipeRight() {
-            current = (current - 1 + maxScreens) % maxScreens;  // go to previous, wrap around
+            current = (current + 1) % maxScreens;  // go to previous, wrap around
             screens[current]->swipeLeft();
         }
 
         Screen* getCurrentScreen(){
             return screens[current];
+        }
+
+        Screen* getScreen(int index){
+            return screens[index];
         }
 
         ~ScreenManager(){

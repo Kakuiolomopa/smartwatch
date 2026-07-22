@@ -7,7 +7,7 @@
 class App{
     protected:
         ScreenManager screenManager;
-
+        bool run;
     public:
 
         std::function<void()> onBack;
@@ -15,12 +15,17 @@ class App{
         static void back_cb(lv_event_t *e){
             App* app = (App*)lv_event_get_user_data(e);
             lv_indev_t* indev = lv_event_get_indev(e);
-            if(lv_indev_get_gesture_dir(indev)==LV_DIR_BOTTOM && app->onBack){
+            if(lv_indev_get_gesture_dir(indev)==LV_DIR_BOTTOM && app->onBack && app->run){
                 app->onBack();
             }
         }
 
+        void change_run(bool value){
+            run = value;
+        }
+
         App(int maxsize) : screenManager(maxsize){
+            run=true;
         }
 
         virtual void create() = 0;

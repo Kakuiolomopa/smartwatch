@@ -19,11 +19,11 @@ class MainMenuApp : public App{
 
         void connectWiFi(){
             WiFi.mode(WIFI_STA);
-            WiFi.begin(ssid,password);
+            WiFi.begin(ssid, password);
 
-            int attempts = 20;
-            while(WiFi.status() != WL_CONNECTED && attempts>0){
-                delay(500);
+            int attempts = 40;
+            while (WiFi.status() != WL_CONNECTED && attempts > 0) {
+                delay(250);
                 attempts--;
             }
         }
@@ -37,7 +37,7 @@ class MainMenuApp : public App{
             time_t now = 0;
             int attempts = 20;
             while(time(&now) < 1577836800 && attempts>0){
-                delay(500);
+                delay(250);
                 attempts--;
             }
         }

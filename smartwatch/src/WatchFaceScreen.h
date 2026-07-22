@@ -7,13 +7,12 @@
 class WatchFaceScreen: public Screen{
     private:
         lv_obj_t *timeLabel;
+        struct tm timeinfo;
 
         char* printDateTime() {
-            struct tm timeinfo;
             static char formattedTime[64];  // static buffer, 64 chars of space
             
             if (!getLocalTime(&timeinfo, 2000)) {
-                Serial.println("Failed to obtain time");
                 strcpy(formattedTime, "00:00");
                 return formattedTime;
             }
@@ -35,7 +34,9 @@ class WatchFaceScreen: public Screen{
         }
 
         void update() override{
-            lv_label_set_text(timeLabel,printDateTime());
+            if(getLocalTime(&timeinfo, 0)){
+                lv_label_set_text(timeLabel,printDateTime());
+            }
         }
 };
 

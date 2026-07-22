@@ -21,6 +21,7 @@ class MainMenuScreen : public Screen {
             this->appiconsize = appiconsize;
             appicons = new AppIcon*[appiconsize]; 
             apps = new App*[appiconsize];
+            activeapp = nullptr;
         }
 
         void create() override {
@@ -37,7 +38,7 @@ class MainMenuScreen : public Screen {
             int column=0;
 
             for(int i=0;i<appiconsize;i++){
-                apps[i] = new WatchApp(1);
+                apps[i] = new WatchApp(4);
                 appicons[i] = new AppIcon(lvScreen,"Clock",[this,i](){startapp(apps[i]);},column,1,row,1);
                 column++;
                 if(column==2){

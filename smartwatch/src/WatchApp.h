@@ -3,6 +3,9 @@
 
 #include "App.h"
 #include "WatchFaceScreen.h"
+#include "TimerScreen.h"
+#include "StopWatchScreen.h"
+#include "AlarmScreen.h"
 
 
 class WatchApp: public App{
@@ -13,12 +16,22 @@ class WatchApp: public App{
         WatchApp(int maxsize) : App(maxsize) {
             this->maxsize = maxsize;
             initScreens = new Screen*[maxsize];
+            for(int i=0;i<maxsize;i++){
+                initScreens[i] = nullptr;
+            }
         }
 
 
         void create() override{
+            if(initScreens[0]) {
+                screenManager.begin();
+                return;
+            }
+            initScreens[0] = new WatchFaceScreen();
+            initScreens[1] = new TimerScreen();
+            initScreens[2] = new StopWatchScreen();
+            initScreens[3] = new AlarmScreen([this](bool v){change_run(v);});
             for(int i=0;i<maxsize;i++){
-                initScreens[i] = new WatchFaceScreen();
                 initScreens[i]->create();
                 lv_obj_add_event_cb(initScreens[i]->lvScreen,back_cb,LV_EVENT_GESTURE,this);
             }
@@ -27,8 +40,8 @@ class WatchApp: public App{
         }
 
         void update() override{
-            Screen* active = screenManager.getCurrentScreen();
-            active->update();
+            for(int i=0;i<maxsize;i++)
+                screenManager.getScreen(i)->update();
         }
 
         ~WatchApp() {
